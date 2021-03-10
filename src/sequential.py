@@ -15,10 +15,10 @@ def sequential_deliberation(agents, bargain, metric, T=10):
     Returns:
         The result of sequential deliberation
     """
-    a_t = random.choice(agents).bliss
+    a_t = random.choice(agents)
     for _ in range(T):
-        u = random.choice(agents).bliss
-        v = random.choice(agents).bliss
+        u = random.choice(agents)
+        v = random.choice(agents)
         a_t = bargain(u, v, a_t, metric)
     return a_t
 
@@ -27,11 +27,11 @@ def sequential_deliberation_list(agents, bargain, metric, T=10):
     """
     Same as above except it returns a list of solutions at each iteration.
     """
-    a_t = random.choice(agents).bliss
+    a_t = random.choice(agents)
     l = [a_t]
     for _ in range(T):
-        u = random.choice(agents).bliss
-        v = random.choice(agents).bliss
+        u = random.choice(agents)
+        v = random.choice(agents)
         a_t = bargain(u, v, a_t, metric)
         l.append(a_t)
     return l
