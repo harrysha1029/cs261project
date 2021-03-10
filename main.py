@@ -1,33 +1,44 @@
+from scipy import optimize
 from src.distortion import social_cost, distortion
-from src.sequential import sequential_deliberation, sequential_deliberation_list, estimate_expected_distortion
-import src.bargain as bargain 
+from src.sequential import (
+    sequential_deliberation,
+    sequential_deliberation_list,
+    estimate_expected_distortion,
+)
+import src.bargain as bargain
 import src.metrics as metrics
 import src.opt as opt
-from src.agent import Agent, get_one_dimensional_agents, extract_bliss_points
+from src.plot import plot3d
+from src.agent import get_d_dimensional_agents_summing_to_1
 import numpy as np
 
-NUM_AGENTS = 10
-MAX_VAL = 1000
+NUM_AGENTS = 100
+MAX_VAL = 10000
 NUM_ITERS = 10
 NUM_SAMPLES = 100
-DIM = 8
+DIM = 3
 
-agents = get_one_dimensional_agents(NUM_AGENTS, MAX_VAL)
-opt = opt.median_1d(extract_bliss_points(agents))
+agents_bc = get_d_dimensional_agents_summing_to_1(NUM_AGENTS, d=DIM)
 
-a_T = sequential_deliberation(
-    agents, bargain.median_1d, metrics.d_1, T=NUM_ITERS
-)
+optimal_bc = opt.budget_constraint_min_d1(agents_bc)
+print(optimal_bc)
+print(sum(optimal_bc))
+print("Social cost of the optimal: " , social_cost(agents_bc, optimal_bc, metrics.d_1))
+print("Social cost of the mean: " , social_cost(agents_bc, opt.mean(agents_bc), metrics.d_1))
 
-dist = distortion(agents, a_T, opt, metrics.d_1)
+plot3d(agents_bc, optimal_point=optimal_bc) 
 
-print(f"Optimal: {opt}")
-print(f"a_T: {a_T}")
-print(f"distortion: {dist}")
 
-expected_dist = estimate_expected_distortion(
-    agents, bargain.median_1d, metrics.d_1, opt,
-    NUM_ITERS, NUM_SAMPLES
-)
+# a_T = sequential_deliberation(agents, bargain.median_1d, metrics.d_1, T=NUM_ITERS)
 
-print(f"Expected distortion over {NUM_SAMPLES} samples: {expected_dist}")
+# dist = distortion(agents, a_T, optimal_val, metrics.d_1)
+
+# print(f"Optimal: {optimal_val}")
+# print(f"a_T: {a_T}")
+# print(f"distortion: {dist}")
+
+# expected_dist = estimate_expected_distortion(
+#     agents, bargain.median_1d, metrics.d_1, optimal_val, NUM_ITERS, NUM_SAMPLES
+# )
+
+# print(f"Expected distortion over {NUM_SAMPLES} samples: {expected_dist}")

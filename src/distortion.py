@@ -1,5 +1,5 @@
 def social_cost(agents, alt, metric):
-    """Computes the social cost of 
+    """Computes the social cost of
     some point with respect to a list of
     agents and a distance metric
 
@@ -11,10 +11,9 @@ def social_cost(agents, alt, metric):
     Returns:
         (float) The social cost
     """
-    costs = [
-        metric(alt, a.bliss) for a in agents
-    ]
+    costs = [metric(alt, a) for a in agents]
     return sum(costs)
+
 
 def distortion(agents, alt, opt, metric):
     """Returns the distortion of some point

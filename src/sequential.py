@@ -2,7 +2,8 @@ import random
 import numpy as np
 from src.distortion import distortion
 
-def sequential_deliberation(agents, bargain, metric, T = 10):
+
+def sequential_deliberation(agents, bargain, metric, T=10):
     """Runs the algorithm from Figure 1 in the paper
 
     Args:
@@ -21,7 +22,8 @@ def sequential_deliberation(agents, bargain, metric, T = 10):
         a_t = bargain(u, v, a_t, metric)
     return a_t
 
-def sequential_deliberation_list(agents, bargain, metric, T = 10):
+
+def sequential_deliberation_list(agents, bargain, metric, T=10):
     """
     Same as above except it returns a list of solutions at each iteration.
     """
@@ -34,13 +36,11 @@ def sequential_deliberation_list(agents, bargain, metric, T = 10):
         l.append(a_t)
     return l
 
-def estimate_expected_distortion(
-    agents, bargain, metric, opt, T=10, num_samples=100
-):
+
+def estimate_expected_distortion(agents, bargain, metric, opt, T=10, num_samples=100):
     l = []
     for _ in range(num_samples):
         a_T = sequential_deliberation(agents, bargain, metric, T=10)
         dist = distortion(agents, a_T, opt, metric)
         l.append(dist)
     return np.mean(l)
-    
