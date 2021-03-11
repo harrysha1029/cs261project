@@ -15,18 +15,18 @@ def social_cost(agents, alt, metric):
     return sum(costs)
 
 
-def distortion(agents, alt, opt, metric):
+def distortion(agents, numerator, denominator, metric):
     """Returns the distortion of some point
     alt with respect to agents and the some optimal
     solution
 
     Args:
         agents ([Agent]): A list of agents
-        alt ([type]): Some point in the metric space
-        opt ([type]): The optimal solution
+        numerator ([type]): Some point in the metric space
+        denominator ([type]): The optimal solution
         metric (Function): The metric to use
 
     Returns:
         float: The distorion of alt w.r.t. agents, opt and metric
     """
-    return social_cost(agents, alt, metric) / social_cost(agents, opt, metric)
+    return social_cost(agents, numerator, metric) / social_cost(agents, denominator, metric)

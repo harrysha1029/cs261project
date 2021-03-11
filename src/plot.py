@@ -4,9 +4,12 @@ import pandas as pd
 import copy
 
 def plot3d(points, found_point = None, optimal_point = None, fname='figs/plot.html'):
-    new_points = [x + ['agent'] for x in points]
+    if len(points[0]) != 3:
+        print("Not plotting")
+        return 
+    new_points = [list(x) + ['agent'] for x in points]
     if found_point is not None:
-        new_points.append(found_point + ['found'])
+        new_points.append(list(found_point) + ['found'])
     if optimal_point is not None:
         new_points.append(optimal_point + ['optimal'])
 

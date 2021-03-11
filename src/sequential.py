@@ -1,6 +1,7 @@
 import random
 import numpy as np
 from src.distortion import distortion
+from tqdm import tqdm
 
 
 def sequential_deliberation(agents, bargain, metric, T=10):
@@ -37,10 +38,9 @@ def sequential_deliberation_list(agents, bargain, metric, T=10):
     return l
 
 
-def estimate_expected_distortion(agents, bargain, metric, opt, T=10, num_samples=100):
+def sequential_deliberation_many_times(agents, bargain, metric, T=10, num_samples=100):
     l = []
-    for _ in range(num_samples):
-        a_T = sequential_deliberation(agents, bargain, metric, T=10)
-        dist = distortion(agents, a_T, opt, metric)
-        l.append(dist)
-    return np.mean(l)
+    for _ in tqdm(range(num_samples)):
+        a_T = sequential_deliberation(agents, bargain, metric, T)
+        l.append(a_T)
+    return l

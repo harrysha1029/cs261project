@@ -15,9 +15,6 @@ def mean(l):
     return list(np.mean(l, axis=0))
 
 
-# TODO use linear programming to solve
-# https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html
-
 def budget_constraint_min_d1(l):
     """
     l is a list of bliss points
@@ -44,6 +41,7 @@ def budget_constraint_min_d1(l):
 
              Aub += [constraint1, constraint2]
              bub += [l[i][j], -l[i][j]]
+
     Aub, bub = np.array(Aub), np.array(bub)
 
     return list(linprog(c, Aub, bub, Aeq, beq).x[:d])
