@@ -1,7 +1,9 @@
 import random
+
 import numpy as np
-from src.distortion import distortion
 from tqdm import tqdm
+
+from src.distortion import distortion
 
 
 def sequential_deliberation(agents, bargain, metric, T=10):

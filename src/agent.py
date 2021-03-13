@@ -46,11 +46,15 @@ def get_d_dimensional_agents_summing_to_1(n, d=3):
         l.append(list(arr))
     return l
 
+
 def rand_array_summing_to_one(d):
     x = np.random.rand(d)
     return x / sum(x)
 
-def get_d_dimensional_agents_summing_to_1_with_clusters(n, d=3, n_clusters=2, noise=0.3, weights=None):
+
+def get_d_dimensional_agents_summing_to_1_with_clusters(
+    n, d=3, n_clusters=2, noise=0.3, weights=None, centers=None
+):
     """Gets a list of n d-dimensional agents
 
     Args:
@@ -60,17 +64,20 @@ def get_d_dimensional_agents_summing_to_1_with_clusters(n, d=3, n_clusters=2, no
     Returns:
         [List]: List of generated agents
     """
-    if weights is None: weights = [1/n_clusters for _ in n_clusters]
+    if weights is None:
+        weights = [1 / n_clusters for _ in range(n_clusters)]
 
     l = []
-    centers = [rand_array_summing_to_one(d) for _ in range(n_clusters)]
+    if centers is None:
+        centers = [rand_array_summing_to_one(d) for _ in range(n_clusters)]
     for w, c in zip(weights, centers):
-        for _ in range(int(w*n)):
+        for _ in range(int(w * n)):
             new_point = c + np.random.normal(0, noise, size=d)
-            l.append(list(new_point/sum(new_point)))
+            if any(x < 0 for x in new_point):
+                new_point -= min(new_point)
+            l.append(list(new_point / sum(new_point)))
 
     return l
-
 
 
 if __name__ == "__main__":

@@ -29,4 +29,6 @@ def distortion(agents, numerator, denominator, metric):
     Returns:
         float: The distorion of alt w.r.t. agents, opt and metric
     """
-    return social_cost(agents, numerator, metric) / social_cost(agents, denominator, metric)
+    return social_cost(agents, numerator, metric) / social_cost(
+        agents, denominator, metric
+    )
